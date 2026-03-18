@@ -2,34 +2,286 @@
 <html lang="zh">
 <head>
   <meta charset="UTF-8">
-  <title>我的第一个网页</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>卓子翔</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600&family=Syne:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    /* CSS 写在这里，控制样式 */
-    body {
-      font-family: sans-serif;
-      background: #f0f4ff;
-      text-align: center;
-      padding: 50px;
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0a0a0f;
+      --surface: #111118;
+      --border: rgba(255,255,255,0.07);
+      --accent: #c084fc;
+      --accent-dim: rgba(192,132,252,0.15);
+      --text: #e8e8f0;
+      --muted: #6b6b80;
     }
-    h1 { color: #3355ff; }
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Serif SC', serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* background grid */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(192,132,252,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(192,132,252,0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 7rem 0 4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      animation: fadeUp 0.8s ease both;
+    }
+
+    .hero-label {
+      font-family: 'Syne', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+
+    .hero-name {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(3rem, 10vw, 5.5rem);
+      font-weight: 700;
+      line-height: 1;
+      color: #fff;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-name span {
+      color: var(--accent);
+    }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      color: var(--muted);
+      line-height: 1.9;
+      max-width: 420px;
+      border-left: 2px solid var(--accent);
+      padding-left: 1.1rem;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Syne', sans-serif;
+      font-size: 12px;
+      padding: 5px 14px;
+      border-radius: 99px;
+      border: 1px solid rgba(192,132,252,0.3);
+      background: var(--accent-dim);
+      color: var(--accent);
+      width: fit-content;
+    }
+
+    .hero-tag::before {
+      content: '♥';
+      font-size: 10px;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 0.5rem 0 3rem;
+      animation: fadeUp 0.8s 0.1s ease both;
+    }
+
+    /* ── SECTION ── */
+    .section {
+      margin-bottom: 4rem;
+      animation: fadeUp 0.8s 0.2s ease both;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.15em;
+    }
+
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    /* ── PHOTO ── */
+    .photo-wrap {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .photo-wrap img {
+      width: 100%;
+      display: block;
+      max-height: 480px;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .photo-wrap:hover img {
+      transform: scale(1.02);
+    }
+
+    .photo-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 2rem 1.5rem 1.2rem;
+      background: linear-gradient(transparent, rgba(10,10,15,0.9));
+      font-size: 12px;
+      color: var(--muted);
+      font-family: 'Syne', sans-serif;
+      letter-spacing: 0.1em;
+    }
+
+    /* ── VIDEO ── */
+    .video-wrap {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: #000;
+      position: relative;
+    }
+
+    .video-wrap video {
+      width: 100%;
+      display: block;
+      max-height: 480px;
+      object-fit: contain;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      padding: 3rem 0 4rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: 'Syne', sans-serif;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      animation: fadeUp 0.8s 0.3s ease both;
+    }
+
+    .footer-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    @media (max-width: 480px) {
+      .hero { padding: 4rem 0 3rem; }
     }
   </style>
 </head>
 <body>
-  <!-- HTML 是内容结构 -->
-  <h1>你好，世界！</h1>
-  <p>这是我用 GitHub Pages 发布的第一个网页。</p>
-  <button onclick="sayHello()">点我</button>
+  <div class="container">
 
-  <script>
-    // JavaScript 是逻辑，类似 C 的函数
-    function sayHello() {
-      alert("Hello from my webpage!");
-    }
-  </script>
+    <div class="hero">
+      <p class="hero-label">关于他 · About</p>
+      <h1 class="hero-name">卓<span>子</span>翔</h1>
+      <p class="hero-desc">我的朋友卓子翔，一个真诚热忱的人。<br>喜欢嘉然，这件事他从不掩饰。</p>
+      <div class="hero-tag">嘉然厨</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- 图片 -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">01</span>
+        <span class="section-title">照片</span>
+      </div>
+      <div class="photo-wrap">
+        <!--
+          把你的图片文件（如 photo.jpg）和这个 index.html 放在同一个文件夹里
+          然后把下面的 "photo.jpg" 改成你的图片文件名
+        -->
+        <img src="photo.jpg" alt="卓子翔的照片">
+        <div class="photo-caption">卓子翔</div>
+      </div>
+    </div>
+
+    <!-- 视频 -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">02</span>
+        <span class="section-title">视频</span>
+      </div>
+      <div class="video-wrap">
+        <!--
+          把你的视频文件（如 video.mp4）和这个 index.html 放在同一个文件夹里
+          然后把下面的 "video.mp4" 改成你的视频文件名
+        -->
+        <video controls>
+          <source src="video.mp4" type="video/mp4">
+          你的浏览器不支持视频播放。
+        </video>
+      </div>
+    </div>
+
+    <div class="footer">
+      <span>卓子翔 · 个人主页</span>
+      <div class="footer-dot"></div>
+      <span>喜欢嘉然</span>
+    </div>
+
+  </div>
 </body>
 </html>
